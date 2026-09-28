@@ -1,0 +1,296 @@
+/* ============================================================
+   ADD CLIENT PAGE
+============================================================ */
+
+/* ---------- Form basics ---------- */
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+.form-label .text-danger { font-size: 12px; }
+
+.form-control, .form-select {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    transition: all .2s ease;
+    background: #fff;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, .12);
+}
+
+.input-group-text {
+    background: #f8f9fc;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    border-radius: 10px 0 0 10px;
+}
+
+/* Field hints (small helper text under fields) */
+.form-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 11.5px;
+    color: #94a3b8;
+}
+
+/* Validation states — only show red when is-invalid is set by JS */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #e74a3b;
+    background-image: none;
+    padding-right: 14px;
+}
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(231, 74, 59, .12);
+}
+
+/* Remove default browser red on untouched fields */
+.form-control:invalid:not(.is-invalid),
+.form-select:invalid:not(.is-invalid) {
+    border-color: #e5e7eb;
+    box-shadow: none;
+    background-image: none;
+}
+
+/* ============================================================
+   UPLOAD BOXES (compact, horizontal-friendly)
+============================================================ */
+
+.upload-caption {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+}
+
+.upload-box { position: relative; }
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 18px 12px;
+    transition: all .25s ease;
+    background: #fafbfd;
+    height: 170px;
+    overflow: hidden;
+    text-align: center;
+}
+.upload-label:hover {
+    border-color: #4e73df;
+    background: #f0f4ff;
+    transform: translateY(-2px);
+}
+.upload-label.dragover {
+    border-color: #4e73df;
+    background: #eef2ff;
+    transform: scale(1.02);
+}
+.upload-label.has-image {
+    padding: 0;
+    border-style: solid;
+    border-color: #4e73df;
+    height: 170px;
+}
+
+.upload-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #6b7280;
+    height: 100%;
+}
+
+.upload-preview .upload-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(78,115,223,.12), rgba(118,75,162,.12));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    transition: all .25s ease;
+}
+.upload-preview .upload-icon i {
+    font-size: 22px;
+    color: #4e73df;
+}
+.upload-label:hover .upload-icon {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(78,115,223,.22), rgba(118,75,162,.22));
+}
+
+.upload-label img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+/* ============================================================
+   STATUS TOGGLE (custom, not Bootstrap btn-group)
+============================================================ */
+
+.status-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 500px;
+}
+
+.status-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s ease;
+    user-select: none;
+    margin: 0;
+}
+
+.status-option:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fc;
+}
+
+.status-option i {
+    font-size: 16px;
+}
+
+/* Active state — green */
+.status-toggle .btn-check:checked + .status-active {
+    background: linear-gradient(135deg, #1cc88a, #17a673);
+    border-color: #1cc88a;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(28, 200, 138, .3);
+    transform: translateY(-1px);
+}
+
+/* Inactive state — red */
+.status-toggle .btn-check:checked + .status-inactive {
+    background: linear-gradient(135deg, #e74a3b, #c0392b);
+    border-color: #e74a3b;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(231, 74, 59, .3);
+    transform: translateY(-1px);
+}
+
+/* Hide default radio dot */
+.status-toggle .btn-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+/* ============================================================
+   ACTION BAR (sticky bottom)
+============================================================ */
+
+.action-bar {
+    position: sticky;
+    bottom: 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 12px 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    z-index: 20;
+    margin-top: 8px;
+}
+
+.action-bar-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+.action-bar-info i { color: #4e73df; font-size: 16px; }
+
+.action-bar-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.action-bar .btn {
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 991.98px) {
+    .upload-label { height: 150px; }
+    .upload-label.has-image { height: 150px; }
+    .upload-preview .upload-icon { width: 40px; height: 40px; }
+    .upload-preview .upload-icon i { font-size: 18px; }
+}
+
+@media (max-width: 767.98px) {
+    .upload-label { height: 140px; padding: 14px 10px; }
+    .upload-label.has-image { height: 140px; }
+
+    .status-toggle {
+        max-width: 100%;
+    }
+
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        bottom: 8px;
+    }
+    .action-bar-actions {
+        width: 100%;
+        margin-left: 0;
+    }
+    .action-bar-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* Smooth entrance animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.panel { animation: fadeInUp .35s ease both; }
+.panel:nth-child(2) { animation-delay: .05s; }
+.panel:nth-child(3) { animation-delay: .1s; }

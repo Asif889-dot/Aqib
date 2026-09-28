@@ -1,0 +1,337 @@
+/* ============================================================
+   REUSABLE SIDEBAR STYLES
+============================================================ */
+
+:root {
+    --sidebar-width: 260px;
+    --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    --sidebar-text: #cbd5e1;
+    --sidebar-hover: rgba(255, 255, 255, .06);
+    --sidebar-active-from: #4e73df;
+    --sidebar-active-to: #764ba2;
+    --sidebar-divider: rgba(255, 255, 255, .06);
+    --sidebar-muted: #64748b;
+    --sidebar-transition: .25s ease;
+
+    /* Scrollbar theme */
+    --sb-track: transparent;
+    --sb-thumb: rgba(148, 163, 184, .35);
+    --sb-thumb-hover: rgba(148, 163, 184, .65);
+    --sb-thumb-active: #4e73df;
+    --sb-width: 6px;
+}
+
+/* ============================================================
+   SIDEBAR SHELL
+============================================================ */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    z-index: 1040;
+    transition: transform var(--sidebar-transition);
+    overflow: hidden; /* prevent double scroll — children scroll instead */
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   Applies to all scrollable sidebar areas
+============================================================ */
+
+/* Firefox */
+.sidebar,
+.sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sb-thumb) var(--sb-track);
+}
+
+/* WebKit (Chrome, Edge, Safari, Opera) */
+.sidebar::-webkit-scrollbar,
+.sidebar-nav::-webkit-scrollbar {
+    width: var(--sb-width);
+    height: var(--sb-width);
+}
+
+.sidebar::-webkit-scrollbar-track,
+.sidebar-nav::-webkit-scrollbar-track {
+    background: var(--sb-track);
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb);
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    transition: background .25s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: var(--sb-thumb-hover);
+    background-clip: padding-box;
+}
+
+.sidebar::-webkit-scrollbar-thumb:active,
+.sidebar-nav::-webkit-scrollbar-thumb:active {
+    background: var(--sb-thumb-active);
+    background-clip: padding-box;
+}
+
+/* Remove the corner square where h+v scrollbars meet */
+.sidebar::-webkit-scrollbar-corner,
+.sidebar-nav::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ============================================================
+   HEADER (BRAND)
+============================================================ */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 22px;
+    border-bottom: 1px solid var(--sidebar-divider);
+    flex-shrink: 0;
+    background: rgba(15, 23, 42, .4);
+    backdrop-filter: blur(6px);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: .3px;
+}
+.sidebar-brand i {
+    font-size: 24px;
+    background: linear-gradient(135deg, #4e73df, #764ba2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-close-sidebar {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all var(--sidebar-transition);
+}
+.btn-close-sidebar:hover {
+    background: rgba(255, 255, 255, .1);
+    color: #fff;
+}
+
+/* ============================================================
+   NAV LIST (scrollable)
+============================================================ */
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* subtle right padding so scrollbar doesn't sit on links */
+    padding-right: 8px;
+}
+
+.nav-section {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--sidebar-muted);
+    font-weight: 700;
+    padding: 16px 12px 8px;
+    user-select: none;
+}
+.nav-section:first-child { padding-top: 4px; }
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    color: var(--sidebar-text);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 2px;
+    transition: all var(--sidebar-transition);
+    position: relative;
+}
+.sidebar .nav-link i {
+    font-size: 17px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+.sidebar .nav-link span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sidebar .nav-link:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+}
+.sidebar .nav-link.active {
+    background: linear-gradient(135deg, var(--sidebar-active-from), var(--sidebar-active-to));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(78, 115, 223, .35);
+}
+.sidebar .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 3px;
+    background: #fff;
+    border-radius: 0 3px 3px 0;
+}
+.sidebar .nav-link .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+}
+
+/* ============================================================
+   USER CARD (BOTTOM)
+============================================================ */
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-top: 1px solid var(--sidebar-divider);
+    flex-shrink: 0;
+    background: rgba(15, 23, 42, .3);
+}
+.sidebar-user .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4e73df, #764ba2);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, .15);
+}
+.sidebar-user .user-details {
+    min-width: 0;
+    line-height: 1.2;
+}
+.sidebar-user .user-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sidebar-user .user-role {
+    color: var(--sidebar-muted);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Role indicator dot */
+.role-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.role-dot.role-admin { background: #f6c23e; box-shadow: 0 0 6px rgba(246, 194, 62, .6); }
+.role-dot.role-user  { background: #1cc88a; box-shadow: 0 0 6px rgba(28, 200, 138, .6); }
+
+/* ============================================================
+   FOOTER (LOGOUT)
+============================================================ */
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid var(--sidebar-divider);
+    flex-shrink: 0;
+    background: rgba(15, 23, 42, .3);
+}
+.sidebar-footer .logout-link {
+    color: #f87171;
+}
+.sidebar-footer .logout-link:hover {
+    background: rgba(248, 113, 113, .12);
+    color: #fca5a5;
+}
+
+/* ============================================================
+   OVERLAY (MOBILE)
+============================================================ */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 1035;
+    opacity: 0;
+    transition: opacity var(--sidebar-transition);
+}
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* ============================================================
+   MAIN WRAPPER
+============================================================ */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin var(--sidebar-transition);
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 1199.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, .2);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .main-wrapper { margin-left: 0; }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .main-wrapper,
+    .sidebar .nav-link,
+    .btn-close-sidebar {
+        transition: none;
+    }
+}

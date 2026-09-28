@@ -1,0 +1,22 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Config / secrets (IMPORTANT — don't upload credentials)
+/config/*.local.php
+/config/secrets.php
+.env
+
+# Logs
+/logs/*.log
+/logs/*.txt
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Uploads (optional — remove these two lines if you want to track uploads)
+/assets/uploads/*
+!/assets/uploads/.gitkeep
