@@ -11,7 +11,6 @@ if (empty($_SESSION['logged_in'])) {
 }
 
 $currentPage = 'clients_list';
-$assetPath   = '../../assets';
 $rootPath    = '../../';
 $pageTitle   = 'All Clients';
 
@@ -30,6 +29,7 @@ $initials = mb_substr($initials, 0, 2) ?: 'U';
 require_once __DIR__ . '/../../config/database.php';
 
 $pdo = null;
+$dbError = '';
 try {
     $db  = new Database();
     $pdo = $db->getConnection();
@@ -38,15 +38,15 @@ try {
 }
 
 // ---------- Filters ----------
-$search = trim((string)($_GET['q']      ?? ''));
-$status = trim((string)($_GET['status'] ?? 'all'));
-$year   = trim((string)($_GET['year']   ?? ''));
-$sortBy = trim((string)($_GET['sort']   ?? 'newest'));
-$page   = max(1, (int)($_GET['page']    ?? 1));
+$search  = trim((string)($_GET['q']      ?? ''));
+$status  = trim((string)($_GET['status'] ?? 'all'));
+$year    = trim((string)($_GET['year']   ?? ''));
+$sortBy  = trim((string)($_GET['sort']   ?? 'newest'));
+$page    = max(1, (int)($_GET['page']    ?? 1));
 $perPage = 10;
 
 // ---------- Build query ----------
-$where = [];
+$where  = [];
 $params = [];
 
 if ($search !== '') {
@@ -68,17 +68,17 @@ $whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
 // Sort
 switch ($sortBy) {
-    case 'oldest':   $orderSql = 'ORDER BY c.created_at ASC';  break;
-    case 'name_asc': $orderSql = 'ORDER BY c.name ASC';        break;
-    case 'name_desc':$orderSql = 'ORDER BY c.name DESC';       break;
-    case 'amount_high': $orderSql = 'ORDER BY c.amount DESC';  break;
-    case 'amount_low':  $orderSql = 'ORDER BY c.amount ASC';   break;
-    default:         $orderSql = 'ORDER BY c.created_at DESC';
+    case 'oldest':      $orderSql = 'ORDER BY c.created_at ASC';  break;
+    case 'name_asc':    $orderSql = 'ORDER BY c.name ASC';        break;
+    case 'name_desc':   $orderSql = 'ORDER BY c.name DESC';       break;
+    case 'amount_high': $orderSql = 'ORDER BY c.amount DESC';     break;
+    case 'amount_low':  $orderSql = 'ORDER BY c.amount ASC';      break;
+    default:            $orderSql = 'ORDER BY c.created_at DESC';
 }
 
-$clients = [];
+$clients      = [];
 $totalClients = 0;
-$totalPages = 1;
+$totalPages   = 1;
 
 if ($pdo instanceof PDO) {
     try {
@@ -86,7 +86,7 @@ if ($pdo instanceof PDO) {
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM clients c $whereSql");
         $countStmt->execute($params);
         $totalClients = (int)$countStmt->fetchColumn();
-        $totalPages = max(1, (int)ceil($totalClients / $perPage));
+        $totalPages   = max(1, (int)ceil($totalClients / $perPage));
 
         // Clamp page
         if ($page > $totalPages) $page = $totalPages;
@@ -108,7 +108,7 @@ if ($pdo instanceof PDO) {
     }
 }
 
-// ---------- Stats (independent of filters) ----------
+// ---------- Stats ----------
 $stats = ['total' => 0, 'active' => 0, 'inactive' => 0, 'total_amount' => 0];
 if ($pdo instanceof PDO) {
     try {
@@ -162,9 +162,9 @@ function nameInitials(string $name): string {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="<?= $assetPath ?>/css/sidebar.css">
-    <link rel="stylesheet" href="<?= $assetPath ?>/css/dashboard.css">
-    <link rel="stylesheet" href="<?= $assetPath ?>/css/clients-list.css">
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/clients-list.css">
 </head>
 <body>
 
@@ -183,17 +183,17 @@ function nameInitials(string $name): string {
             </ol>
         </nav>
 
-        <!-- Flash messages from redirects -->
+        <!-- Flash messages -->
         <?php if (!empty($_GET['msg'])): ?>
             <?php
             $flashType = 'success';
             $flashMsg  = '';
             switch ($_GET['msg']) {
-                case 'added':     $flashMsg = 'Client added successfully!'; break;
-                case 'updated':   $flashMsg = 'Client updated successfully!'; break;
-                case 'deleted':   $flashMsg = 'Client deleted successfully.'; break;
-                case 'notfound':  $flashType = 'danger'; $flashMsg = 'Client not found.'; break;
-                case 'error':     $flashType = 'danger'; $flashMsg = 'Something went wrong. Please try again.'; break;
+                case 'added':    $flashMsg = 'Client added successfully!';    break;
+                case 'updated':  $flashMsg = 'Client updated successfully!';  break;
+                case 'deleted':  $flashMsg = 'Client deleted successfully.';  break;
+                case 'notfound': $flashType = 'danger'; $flashMsg = 'Client not found.'; break;
+                case 'error':    $flashType = 'danger'; $flashMsg = 'Something went wrong. Please try again.'; break;
             }
             ?>
             <?php if ($flashMsg): ?>
@@ -470,16 +470,14 @@ function nameInitials(string $name): string {
                             <nav aria-label="Clients pagination">
                                 <ul class="pagination pagination-sm mb-0">
 
-                                    <!-- Prev -->
                                     <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
                                         <a class="page-link" href="<?= htmlspecialchars(pageUrl(max(1, $page - 1))) ?>">
                                             <i class="bi bi-chevron-left"></i>
                                         </a>
                                     </li>
 
-                                    <!-- Pages with ellipsis -->
                                     <?php
-                                    $window = 2; // pages on each side of current
+                                    $window = 2;
                                     $start  = max(1, $page - $window);
                                     $end    = min($totalPages, $page + $window);
 
@@ -501,7 +499,6 @@ function nameInitials(string $name): string {
                                     }
                                     ?>
 
-                                    <!-- Next -->
                                     <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
                                         <a class="page-link" href="<?= htmlspecialchars(pageUrl(min($totalPages, $page + 1))) ?>">
                                             <i class="bi bi-chevron-right"></i>
@@ -554,7 +551,7 @@ function nameInitials(string $name): string {
         deleteUrl: '../../backend/clients/delete.php'
     };
 </script>
-<script src="<?= $assetPath ?>/js/clients-list.js"></script>
+<script src="../../assets/js/clients-list.js"></script>
 
 </body>
 </html>

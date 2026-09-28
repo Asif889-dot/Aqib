@@ -1,0 +1,199 @@
+/* ============================================================
+   UPDATE FROM GITHUB — page styles
+============================================================ */
+
+/* Info rows */
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.info-row-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(78,115,223,.12), rgba(118,75,162,.12));
+    color: #4e73df;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.info-row-label {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-bottom: 2px;
+}
+.info-row-value {
+    font-size: 14px;
+    color: #1f2937;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* Code blocks */
+.code-block {
+    background: #0f172a;
+    color: #cbd5e1;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    font-family: 'Consolas', 'Courier New', monospace;
+    overflow-x: auto;
+    margin: 0;
+    border: 1px solid #1e293b;
+}
+
+/* Commit list */
+.commit-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.commit-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    align-items: flex-start;
+}
+.commit-item:last-child { border-bottom: none; }
+.commit-item:hover { background: #fafbfd; }
+
+.commit-hash {
+    background: linear-gradient(135deg, #4e73df, #764ba2);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    font-family: 'Consolas', monospace;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.commit-body { flex: 1; min-width: 0; }
+.commit-msg {
+    font-size: 13.5px;
+    color: #1f2937;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+.commit-meta {
+    font-size: 11.5px;
+    color: #94a3b8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Pull mode selector */
+.pull-options {
+    display: grid;
+    gap: 10px;
+}
+.pull-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    transition: all .2s ease;
+    margin: 0;
+}
+.pull-option:hover {
+    border-color: #cbd5e1;
+    background: #f8f9fc;
+}
+.pull-option input[type="radio"] {
+    margin-top: 4px;
+    width: 18px;
+    height: 18px;
+    accent-color: #4e73df;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.pull-option:has(input:checked) {
+    border-color: #4e73df;
+    background: #eef2ff;
+    box-shadow: 0 4px 12px rgba(78,115,223,.15);
+}
+.pull-option-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.pull-option-desc {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+.pull-option code {
+    background: rgba(0,0,0,.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11.5px;
+}
+
+/* Output console */
+.output-console {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    background: #0f172a;
+    animation: slideDown .3s ease;
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: #1e293b;
+    color: #cbd5e1;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .4px;
+}
+.output-header span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.output-body {
+    color: #cbd5e1;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    padding: 16px;
+    margin: 0;
+    max-height: 420px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .commit-item { padding: 12px 14px; flex-direction: column; gap: 8px; }
+    .commit-hash { align-self: flex-start; }
+    .pull-option { padding: 12px; }
+}

@@ -13,7 +13,7 @@
  * Variables expected:
  *   $currentPage (string) — key of active menu item
  *   $assetPath   (string) — relative path to /assets
- *   $rootPath    (string) — relative path to project root
+ *   $rootPath    (string) — path to project root from THIS page
  *   $userName, $userEmail, $userRole, $initials — from session
  */
 
@@ -74,20 +74,6 @@ $menuGroups = [
             'url'   => $rootPath . 'frontend/dashboard.php',
             'roles' => null,
         ],
-        // [
-        //     'key'   => 'analytics',
-        //     'label' => 'Analytics',
-        //     'icon'  => 'bi-bar-chart-fill',
-        //     'url'   => $rootPath . 'frontend/analytics.php',
-        //     'roles' => null,
-        // ],
-        // [
-        //     'key'   => 'reports',
-        //     'label' => 'Reports',
-        //     'icon'  => 'bi-file-earmark-text-fill',
-        //     'url'   => $rootPath . 'frontend/reports.php',
-        //     'roles' => null,
-        // ],
     ],
 
     'Clients' => [
@@ -97,7 +83,6 @@ $menuGroups = [
             'icon'  => 'bi-people-fill',
             'url'   => $rootPath . 'frontend/clients/list.php',
             'roles' => null,
-            // ✅ Live count — only show badge if > 0
             'badge' => $clientCount > 0
                 ? ['text' => (string)$clientCount, 'class' => 'bg-primary']
                 : null,
@@ -109,54 +94,16 @@ $menuGroups = [
             'url'   => $rootPath . 'frontend/clients/add.php',
             'roles' => null,
         ],
-        // [
-        //     'key'   => 'clients_import',
-        //     'label' => 'Import Clients',
-        //     'icon'  => 'bi-file-earmark-arrow-up-fill',
-        //     'url'   => $rootPath . 'frontend/clients/import.php',
-        //     'roles' => ['admin'],
-        // ],
-        // [
-        //     'key'   => 'clients_archive',
-        //     'label' => 'Archived',
-        //     'icon'  => 'bi-archive-fill',
-        //     'url'   => $rootPath . 'frontend/clients/archive.php',
-        //     'roles' => ['admin'],
-        // ],
-    ],
-
-    'Account' => [
-        // [
-        //     'key'   => 'profile',
-        //     'label' => 'Profile',
-        //     'icon'  => 'bi-person-circle',
-        //     'url'   => $rootPath . 'frontend/profile.php',
-        //     'roles' => null,
-        // ],
-        // [
-        //     'key'   => 'settings',
-        //     'label' => 'Settings',
-        //     'icon'  => 'bi-gear-fill',
-        //     'url'   => $rootPath . 'frontend/settings.php',
-        //     'roles' => null,
-        // ],
     ],
 
     'Admin' => [
-        // [
-        //     'key'   => 'users',
-        //     'label' => 'User Management',
-        //     'icon'  => 'bi-shield-check',
-        //     'url'   => $rootPath . 'frontend/users.php',
-        //     'roles' => ['admin'],
-        // ],
-        // [
-        //     'key'   => 'audit',
-        //     'label' => 'Audit Logs',
-        //     'icon'  => 'bi-journal-text',
-        //     'url'   => $rootPath . 'frontend/audit.php',
-        //     'roles' => ['admin'],
-        // ],
+        [
+            'key'   => 'admin_update',
+            'label' => 'Update From GitHub',
+            'icon'  => 'bi-cloud-arrow-down-fill',
+            'url'   => $rootPath . 'frontend/admin/update.php',
+            'roles' => ['admin'],
+        ],
     ],
 ];
 
